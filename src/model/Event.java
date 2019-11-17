@@ -9,6 +9,7 @@ public class Event{
     private String responsibleTeacher;
     private String responsibleFaculty;
     private int peopleAsist;
+    private ArrayList<String> auditorium;
 
     public Event(String name, Date date, int startHour, int endHour, 
     String responsibleTeacher, String responsibleFaculty, int peopleAsist){
@@ -19,6 +20,11 @@ public class Event{
         this.responsibleTeacher = responsibleTeacher;
         this.responsibleFaculty = responsibleFaculty;
         this.peopleAsist = peopleAsist;
+        auditorium = new ArrayList<>();
+    }
+
+    public void addAuditorium(String name){
+        auditorium.add(name);
     }
 
     public String getName() {
@@ -47,6 +53,14 @@ public class Event{
 
     public int getPeopleAsist() {
         return peopleAsist;
+    }
+
+    public void setPeopleAsist(int peopleAsist) {
+        this.peopleAsist = peopleAsist;
+    }
+
+    public ArrayList<String> getAuditorium() {
+        return auditorium;
     }
 
 }
