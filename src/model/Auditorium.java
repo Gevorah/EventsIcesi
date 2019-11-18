@@ -9,29 +9,27 @@ public class Auditorium implements Constants{
     private String state;
     private Chair[][] chairs;
 
-    public Auditorium(String name, String location){
+    public Auditorium(String name, String location, String state){
         this.name = name; 
         this.location = location;
+        this.state = state;
     }
 
-    public void createChairs(int crows){
-        chairs = new Chair[crows][5];
+    public void createChairs(int rows){
+        chairs = new Chair[rows][5];
     }
 
     public void columns(int index, int column){
         chairs[index] = new Chair[column];
-        for(int i=0;i<index;i++){
-            chairs[index][i] = operational;
-        }
     }
 
-    public String reportChair(char crow, char column){
+    public String reportChair(char row, int column){
         String show = "The chair has been reported as defective.";
         int index = 0;
-        if(crow>90){
-            index = crow-71;
+        if(row>90){
+            index = row-71;
         }else{
-            index = crow-65;
+            index = row-65;
         }
         try {
             chairs[index][column].setState(defective);
@@ -41,39 +39,18 @@ public class Auditorium implements Constants{
         return show;
     }
 
-    public int defectivePercent(){
+    public float defectivePercent(){
         int f = 0;
-        double percent = 0;
         for(Chair[] temp: chairs){
             for(Chair select: temp){
-                if(select.getState().equals(defective)){
+                if(select!=null&&select.getState().equals(defective)){
                     f++;
                 }
             }   
         }
-        percent = (double)(f/numberOfChairs());
-        return (int)percent*100;
-    }
-
-    public int fillAuditorium(){
-        Random r = new Random();
-        int numberOfChairs = numberOfChairs();
-        int i = (int)(r.nextInt()*numberOfChairs+1);
-        int crows = chairs.length-1;
-        int columns = 0;
-        int indexCrow = 0;
-        int indexColumn = 0;
-        while(i>0){
-            indexCrow = (int)(r.nextInt()*crows+0);
-            columns = chairs[index].length-1;
-            indexColumn = (int)(r.nextInt()*columns+0);
-            if(chairs[indexCrow][indexColumn].isFree()==true&&
-            chairs[indexCrow][indexColumn].getState().equals(operational)){
-                chairs[indexCrow][indexColumn].setFree(false);
-                i--;
-            }
-        }
-        return i;
+        System.out.println(f);
+        float percent = (float)((f*100)/numberOfChairs());
+        return percent;
     }
 
     public int numberOfChairs(){
@@ -81,15 +58,30 @@ public class Auditorium implements Constants{
         for(int i=0;i<chairs.length;i++){
             for(int j=0;j<chairs[i].length;j++){
                 count++;
-            }   
+            }
         }
         return count;
     }
 
-    public char alphabet(int index){
-        int character = 65;
-        if(index>25)character=97;
-        return (char)(character+index);
+    public int fillAuditorium(){
+        Random r = new Random();
+        int numberOfChairs = numberOfChairs();
+        int i = (int)(r.nextInt()*numberOfChairs+1);
+        int rows = chairs.length-1;
+        int columns = 0;
+        int indexrow = 0;
+        int indexColumn = 0;
+        while(i>0){
+            indexrow = (int)(r.nextInt()*rows+0);
+            columns = chairs[indexrow].length-1;
+            indexColumn = (int)(r.nextInt()*columns+0);
+            if(chairs[indexrow][indexColumn].isFree()==true&&
+            (chairs[indexrow][indexColumn].getState()).equals(operational)){
+                chairs[indexrow][indexColumn].setFree(false);
+                i--;
+            }
+        }
+        return i;
     }
 
     public String getName(){
@@ -107,4 +99,10 @@ public class Auditorium implements Constants{
     public void setState(String state) {
         this.state = state;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%-20s%-20s%-20s",name,location,state);
+    }
+
 }

@@ -6,7 +6,7 @@ public class Chair implements Constants{
     private boolean free;
 
     public Chair(String state){
-        this.state = state;
+        state = operational;
     }
 
     public String getState(){

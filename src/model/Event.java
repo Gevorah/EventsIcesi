@@ -1,9 +1,12 @@
 package model;
 
+import java.util.*;
+import java.time.*;
+
 public class Event{
     
     private String name;
-    private Date date;
+    private LocalDate date;
     private int startHour;
     private int endHour;
     private String responsibleTeacher;
@@ -11,27 +14,22 @@ public class Event{
     private int peopleAsist;
     private ArrayList<String> auditorium;
 
-    public Event(String name, Date date, int startHour, int endHour, 
-    String responsibleTeacher, String responsibleFaculty, int peopleAsist){
+    public Event(String name, LocalDate date, int startHour, int endHour, 
+    String responsibleTeacher, String responsibleFaculty, ArrayList<String> auditorium){
         this.name = name;
         this.date = date;
         this.startHour = startHour;
         this.endHour = endHour;
         this.responsibleTeacher = responsibleTeacher;
         this.responsibleFaculty = responsibleFaculty;
-        this.peopleAsist = peopleAsist;
-        auditorium = new ArrayList<>();
-    }
-
-    public void addAuditorium(String name){
-        auditorium.add(name);
+        this.auditorium = auditorium;
     }
 
     public String getName() {
         return name;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -58,9 +56,17 @@ public class Event{
     public void setPeopleAsist(int peopleAsist) {
         this.peopleAsist = peopleAsist;
     }
-
+    
     public ArrayList<String> getAuditorium() {
         return auditorium;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%-20s%-15s%s to %-9s%-25s%-25s%-25s",name,date,startHour,endHour,
+        responsibleTeacher,responsibleFaculty,auditorium);
+    }
+
+    
 
 }
